@@ -18,7 +18,7 @@ class TutorialHome extends StatelessWidget {
           new IconButton(icon: new Icon(Icons.search), tooltip: 'Search', onPressed: null)
         ],
       ),
-      body: new MyButton(),
+      body: new Counter(),
       floatingActionButton: new FloatingActionButton(
         tooltip: 'Add',
         child: new Icon(Icons.add),
@@ -28,25 +28,30 @@ class TutorialHome extends StatelessWidget {
   }
 }
 
-class MyButton extends StatelessWidget {
+class Counter extends StatefulWidget {
+  @override
+  _CounterState createState() => new _CounterState();
+}
+
+class _CounterState extends State<Counter> {
+  int _counter = 0;
+
+  void _increment() {
+    setState(() {
+      _counter++;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return new GestureDetector(
-      onTap: () {
-        print('MyButton was tapped!');
-      },
-      child: new Container(
-        height: 36.0,
-        padding: const EdgeInsets.all(8.0),
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-        decoration: new BoxDecoration(
-          borderRadius: new BorderRadius.circular(5.0),
-          color: Colors.lightGreen[500],
+    return new Row(
+      children: <Widget>[
+        new RaisedButton(
+          onPressed: _increment,
+          child: new Text('Increment'),
         ),
-        child: new Center(
-          child: new Text('Engage'),
-        ),
-      ),
+        new Text('Count: $_counter'),
+      ],
     );
   }
 }
