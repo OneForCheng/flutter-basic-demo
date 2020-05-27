@@ -28,6 +28,31 @@ class TutorialHome extends StatelessWidget {
   }
 }
 
+class CounterDisplay extends StatelessWidget {
+  CounterDisplay({this.count});
+
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
+    return new Text('Count: $count');
+  }
+}
+
+class CounterIncrementor extends StatelessWidget {
+  CounterIncrementor({this.onPressed});
+
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return new RaisedButton(
+      onPressed: onPressed,
+      child: new Text('Increment'),
+    );
+  }
+}
+
 class Counter extends StatefulWidget {
   @override
   _CounterState createState() => new _CounterState();
@@ -38,20 +63,15 @@ class _CounterState extends State<Counter> {
 
   void _increment() {
     setState(() {
-      _counter++;
+      ++_counter;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Row(
-      children: <Widget>[
-        new RaisedButton(
-          onPressed: _increment,
-          child: new Text('Increment'),
-        ),
-        new Text('Count: $_counter'),
-      ],
-    );
+    return new Row(children: <Widget>[
+      new CounterIncrementor(onPressed: _increment),
+      new CounterDisplay(count: _counter),
+    ]);
   }
 }
