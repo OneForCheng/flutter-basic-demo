@@ -1,20 +1,33 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var title = 'Web Images';
-
-    return MaterialApp(
+    final title = 'Basic List';
+    
+    return new MaterialApp(
       title: title,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text(title),
+      home: new Scaffold(
+        appBar: new AppBar(
+          title: new Text(title),
         ),
-        body: Image.network(
-          'https://i.picsum.photos/id/9/250/250.jpg',
+        body: new ListView(
+          children: <Widget>[
+            new ListTile(
+              leading: new Icon(Icons.map),
+              title: new Text('Map'),
+            ),
+            new ListTile(
+              leading: new Icon(Icons.photo),
+              title: new Text('Album'),
+            ),
+            new ListTile(
+              leading: new Icon(Icons.phone),
+              title: new Text('Phone'),
+            ),
+          ],
         ),
       ),
     );
