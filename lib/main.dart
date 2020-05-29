@@ -1,56 +1,20 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(new MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final appName = 'Custom Themes';
+    var title = 'Web Images';
 
-    return new MaterialApp(
-      title: appName,
-      theme: new ThemeData(
-        brightness: Brightness.dark,
-        primaryColor: Colors.lightBlue[800],
-        accentColor: Colors.cyan[600],
-      ),
-      home: new MyHomePage(
-        title: appName,
-      ),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  final String title;
-
-  MyHomePage({Key key, @required this.title}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text(title),
-      ),
-      body: new Center(
-        child: new Container(
-          color: Theme.of(context).accentColor,
-          child: new Text(
-            'Text with a background color',
-            style: Theme.of(context).textTheme.title,
-          ),
+    return MaterialApp(
+      title: title,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text(title),
         ),
-      ),
-      floatingActionButton: new Theme(
-        data: new ThemeData(
-          accentColor: Colors.yellow,
-        ),
-        child: new FloatingActionButton(
-          onPressed: null,
-          child: new Icon(Icons.add),
+        body: Image.network(
+          'https://i.picsum.photos/id/9/250/250.jpg',
         ),
       ),
     );
