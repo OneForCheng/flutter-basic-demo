@@ -1,99 +1,57 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(new MaterialApp(
-    title: 'Shopping App',
-    home: new ShoppingList(
-      products: <Product>[
-        new Product(name: 'Eggs'),
-        new Product(name: 'Flour'),
-        new Product(name: 'Chocolate chips'),
-        new Product(name: 'Apple'),
-      ],
-    ),
-  ));
+  runApp(new MyApp());
 }
 
-class Product {
-  const Product({this.name});
-  final String name;
-}
-
-typedef void CartChangedCallback(Product product, bool inCart);
-
-class ShoppingListItem extends StatelessWidget {
-  ShoppingListItem({Product product, this.inCart, this.onCartChanged})
-      : product = product,
-        super(key: new ObjectKey(product));
-
-  final Product product;
-  final bool inCart;
-  final CartChangedCallback onCartChanged;
-
-  Color _getColor(BuildContext context) {
-    return inCart ? Colors.black54 : Theme.of(context).primaryColor;
-  }
-
-  TextStyle _getTextStyle(BuildContext context) {
-    if (!inCart) return null;
-
-    return new TextStyle(
-      color: Colors.black54,
-      decoration: TextDecoration.lineThrough,
-    );
-  }
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new ListTile(
-      onTap: () {
-        onCartChanged(product, !inCart);
-      },
-      leading: new CircleAvatar(
-        backgroundColor: _getColor(context),
-        child: new Text(product.name[0]),
+    final appName = 'Custom Themes';
+
+    return new MaterialApp(
+      title: appName,
+      theme: new ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Colors.lightBlue[800],
+        accentColor: Colors.cyan[600],
       ),
-      title: new Text(product.name, style: _getTextStyle(context)),
+      home: new MyHomePage(
+        title: appName,
+      ),
     );
   }
 }
 
-class ShoppingList extends StatefulWidget {
-  ShoppingList({Key key, this.products}) : super(key: key);
+class MyHomePage extends StatelessWidget {
+  final String title;
 
-  final List<Product> products;
-
-  @override
-  _ShoppingListState createState() => new _ShoppingListState();
-}
-
-class _ShoppingListState extends State<ShoppingList> {
-  Set<Product> _shoppingCart = new Set<Product>();
-
-  void _handleCartChanged(Product product, bool inCart) {
-    setState(() {
-      if (inCart)
-        _shoppingCart.add(product);
-      else
-        _shoppingCart.remove(product);
-    });
-  }
+  MyHomePage({Key key, @required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Shopping List'),
+        title: new Text(title),
       ),
-      body: new ListView(
-        padding: new EdgeInsets.symmetric(vertical: 8.0),
-        children: widget.products.map((Product product) {
-          return new ShoppingListItem(
-            product: product,
-            inCart: _shoppingCart.contains(product),
-            onCartChanged: _handleCartChanged,
-          );
-        }).toList(),
+      body: new Center(
+        child: new Container(
+          color: Theme.of(context).accentColor,
+          child: new Text(
+            'Text with a background color',
+            style: Theme.of(context).textTheme.title,
+          ),
+        ),
+      ),
+      floatingActionButton: new Theme(
+        data: new ThemeData(
+          accentColor: Colors.yellow,
+        ),
+        child: new FloatingActionButton(
+          onPressed: null,
+          child: new Icon(Icons.add),
+        ),
       ),
     );
   }
